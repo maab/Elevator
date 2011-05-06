@@ -211,13 +211,16 @@ public class ElevatorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-       try {
+       
+        // Workaraound um nicht-intuitives verhalten der Input-Felder zu umgehen
+        try {
             levelsInputNum.commitEdit();
             elevatorsInputNum.commitEdit();
         } catch (ParseException ex) {
             Logger.getLogger(ElevatorUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+       
+       // Buttons aktivieren / GUI in Betriebsmodus umschalten
         startButton.setText("Restart");
         stepButton.setEnabled(true);
         autoStepButton.setEnabled(true);
@@ -225,7 +228,8 @@ public class ElevatorUI extends javax.swing.JFrame {
         holdButton.setEnabled(false);
         holdButton.setText("Hold");
         autoStepClockSeconds.setEnabled(true);
-
+        
+        // Controls - Container fuer GUI-Elemente fuellen
         Controls controls = new Controls();
         controls.holdButton = holdButton;
         controls.stepButton = stepButton;
@@ -233,15 +237,17 @@ public class ElevatorUI extends javax.swing.JFrame {
         controls.autoStepButton = autoStepButton;
         controls.autoStepClockSeconds = autoStepClockSeconds;
         
-//        Building building = Bootstrap.init((Integer) levelsInputNum.getValue(), (Integer) elevatorsInputNum.getValue(), stage);
+        // Building-Objekt initialisieren
         Building building = new Building((Integer) levelsInputNum.getValue(), (Integer) elevatorsInputNum.getValue(), controls);
 
+        // "Buehne" leeren und GUI-Elemente des neuen Buildings aufbauen
         stage.removeAll();
         stage.add(building);
 
-//        CallListTextField.setText("Hello World");
-
+        // GUI neu rendern nach aenderungen
         pack();
+        
+        // Statusausgabe in Konsole
         System.out.println("(Re-) init succesful.");
 
     }//GEN-LAST:event_startButtonActionPerformed
